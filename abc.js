@@ -1,17 +1,30 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const thumbnail = document.querySelector(".thumbnail");
-    const popup = document.getElementById("popup");
-    const popupImage = popup.querySelector("img");
+// src/ThumbnailPopup.js
 
-    thumbnail.addEventListener("click", function () {
-        const imageUrl = this.getAttribute("src");
-        popupImage.setAttribute("src", imageUrl);
-        popup.style.display = "flex";
-    });
+import React, { useState } from "react";
+import "./ThumbnailPopup.css";
 
-    popup.addEventListener("click", function (event) {
-        if (event.target === this) {
-            popup.style.display = "none";
-        }
-    });
-});
+const ThumbnailPopup = ({ thumbnailUrl, popupUrl }) => {
+  const [showPopup, setShowPopup] = useState(false);
+
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
+
+  return (
+    <div className="thumbnail-container">
+      <img
+        className="thumbnail"
+        src={thumbnailUrl}
+        alt="Thumbnail Image"
+        onClick={togglePopup}
+      />
+      {showPopup && (
+        <div className="popup" onClick={togglePopup}>
+          <img src={popupUrl} alt="Popup Image" />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ThumbnailPopup;
